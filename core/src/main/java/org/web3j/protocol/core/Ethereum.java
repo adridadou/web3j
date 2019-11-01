@@ -1,3 +1,15 @@
+/*
+ * Copyright 2019 Web3 Labs Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 package org.web3j.protocol.core;
 
 import java.math.BigInteger;
@@ -51,10 +63,9 @@ import org.web3j.protocol.core.methods.response.ShhUninstallFilter;
 import org.web3j.protocol.core.methods.response.ShhVersion;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.core.methods.response.Web3Sha3;
+import org.web3j.protocol.core.methods.response.management.AdminNodeInfo;
 
-/**
- * Core Ethereum JSON-RPC API.
- */
+/** Core Ethereum JSON-RPC API. */
 public interface Ethereum {
     Request<?, Web3ClientVersion> web3ClientVersion();
 
@@ -65,6 +76,8 @@ public interface Ethereum {
     Request<?, NetListening> netListening();
 
     Request<?, NetPeerCount> netPeerCount();
+
+    Request<?, AdminNodeInfo> adminNodeInfo();
 
     Request<?, EthProtocolVersion> ethProtocolVersion();
 
@@ -86,8 +99,7 @@ public interface Ethereum {
             String address, DefaultBlockParameter defaultBlockParameter);
 
     Request<?, EthGetStorageAt> ethGetStorageAt(
-            String address, BigInteger position,
-            DefaultBlockParameter defaultBlockParameter);
+            String address, BigInteger position, DefaultBlockParameter defaultBlockParameter);
 
     Request<?, EthGetTransactionCount> ethGetTransactionCount(
             String address, DefaultBlockParameter defaultBlockParameter);
@@ -123,8 +135,7 @@ public interface Ethereum {
     Request<?, EthBlock> ethGetBlockByHash(String blockHash, boolean returnFullTransactionObjects);
 
     Request<?, EthBlock> ethGetBlockByNumber(
-            DefaultBlockParameter defaultBlockParameter,
-            boolean returnFullTransactionObjects);
+            DefaultBlockParameter defaultBlockParameter, boolean returnFullTransactionObjects);
 
     Request<?, EthTransaction> ethGetTransactionByHash(String transactionHash);
 

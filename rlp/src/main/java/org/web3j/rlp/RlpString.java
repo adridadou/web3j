@@ -1,13 +1,25 @@
+/*
+ * Copyright 2019 Web3 Labs Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 package org.web3j.rlp;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 
-/**
- * RLP string type.
- */
+import org.web3j.utils.Numeric;
+
+/** RLP string type. */
 public class RlpString implements RlpType {
-    private static final byte[] EMPTY = new byte[]{ };
+    private static final byte[] EMPTY = new byte[] {};
 
     private final byte[] value;
 
@@ -19,12 +31,23 @@ public class RlpString implements RlpType {
         return value;
     }
 
+    public BigInteger asPositiveBigInteger() {
+        if (value.length == 0) {
+            return BigInteger.ZERO;
+        }
+        return new BigInteger(1, value);
+    }
+
+    public String asString() {
+        return Numeric.toHexString(value);
+    }
+
     public static RlpString create(byte[] value) {
         return new RlpString(value);
     }
 
     public static RlpString create(byte value) {
-        return new RlpString(new byte[]{ value });
+        return new RlpString(new byte[] {value});
     }
 
     public static RlpString create(BigInteger value) {
@@ -33,7 +56,7 @@ public class RlpString implements RlpType {
             return new RlpString(EMPTY);
         } else {
             byte[] bytes = value.toByteArray();
-            if (bytes[0] == 0) {  // remove leading zero
+            if (bytes[0] == 0) { // remove leading zero
                 return new RlpString(Arrays.copyOfRange(bytes, 1, bytes.length));
             } else {
                 return new RlpString(bytes);
